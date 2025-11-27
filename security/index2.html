@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <style type="text/css">
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            div#navigationBar {
+                display: flex;
+                flex-direction: row;
+                background-color: black;
+                height: 9%;
+                width: 100%;
+                align-items: center;
+            }
+            div#title {
+                color: white;
+                font-size: 26px;
+                margin: 0.5em;
+            }
+            div#dialogBox {
+                position: fixed;
+                height: 100%;
+                background-color: black;
+                width: 20vw;
+                display: none;
+            }
+            div#dialogBoxNavBar {
+                display: flex;
+                height: 2em;
+                padding: 0.5em;
+                justify-content: right;
+                align-items: center;
+            }
+            div#mainContentContainer {
+                min-height: 91%;
+                font-size: 24px;
+                padding: 0.5em;
+                background-color: grey;
+            }
+            button {
+                background-color: black;
+                color: white;
+                font-size: 16px;
+                border: 0;
+            }
+            button#menuButton {
+                font-size: 24px;
+                margin: 0.5em;
+            }
+            button:hover {
+                background-color: rgb(23,23,23);
+            }
+            a.menuItem {
+                color: white;
+                font-size: 24px;
+                padding: 0.5em;
+                text-decoration: none;
+                display: block;
+            }
+            a.menuItem:hover {
+                background-color: rgb(23,23,23);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="dialogBox" aria-labelledby="menuButton">
+            <div id="dialogBoxNavBar"><button id="closeMenuButton" aria-haspopup="true" aria-controls="dialogBox" aria-expanded="true">X</button></div>
+            <a class="menuItem" href="submit.html">Submit an Item</a>
+            <a class="menuItem" href="request.html">Submit a Request</a>
+            <a class="menuItem" href="authors.html">Authors</a>
+        </div>
+        <div id="navigationBar">
+        <button id="menuButton" aria-haspopup="true" aria-controls="dialogBox" aria-expanded="false">≣</button>
+        <div id="title">NCSSM Security/Lost and Found</div>
+        </div>
+        <div id="mainContentContainer">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident aspernatur magni tempore obcaecati nesciunt! Ad veniam possimus fugit odio nobis facere consectetur sit deleniti ipsam tempore itaque reprehenderit, eius aspernatur sapiente suscipit quas dolorum? Quaerat est fugit officiis, illum vel corporis maxime porro delectus voluptatibus laboriosam natus aliquid. Quae dicta dolores natus eveniet? Sequi earum nisi blanditiis eius repellendus. Atque perferendis praesentium numquam mollitia dolorem nemo a cum dolore, sit iste molestias voluptates dolores eveniet aperiam amet omnis accusantium? Quod aliquid at obcaecati nulla exercitationem ipsa accusamus tenetur ipsam nihil facere nostrum, laudantium fuga vitae omnis vero. Ad, quasi esse.</div>
+        <script type="text/javascript">
+            function init() {
+                document.addEventListener('click', screenClick);
+                document.getElementById('menuButton').addEventListener('click', buttonClick);
+                document.getElementById('closeMenuButton').addEventListener('click', buttonClick);
+            }
+
+            function screenClick(event) {
+                let menuButton = document.getElementById('menuButton');
+                let closeMenuButton = document.getElementById('closeMenuButton');
+                if (menuButton.getAttribute('aria-expanded') === 'true') {
+                    let dialogBox = document.getElementById('dialogBox');
+                    if (event.pageX > dialogBox.offsetWidth) {
+                        dialogBox.style.display = 'none';
+                        menuButton.setAttribute('aria-expanded', false)
+                        closeMenuButton.setAttribute('aria-expanded', false)
+                        menuButton.style.display = 'block';
+                    }
+                }
+            }
+
+            function buttonClick(event) {
+                let button = event.target;
+                let button2 = document.getElementById('menuButton');
+                if (button === button2) {
+                    button2 = document.getElementById('closeMenuButton');
+                }
+                let dialogBox = document.getElementById(button.getAttribute('aria-controls'))
+                if (button.getAttribute('aria-expanded') === 'true') {
+                    button.setAttribute('aria-expanded', false);
+                    button2.setAttribute('aria-expanded', false);
+                    dialogBox.style.display = 'none';
+                }
+                else {
+                    button.setAttribute('aria-expanded', true);
+                    button2.setAttribute('aria-expanded', true);
+                    dialogBox.style.display = 'block';
+                }
+            }
+
+            window.onload = init;
+        </script>
+    </body>
+</html>
