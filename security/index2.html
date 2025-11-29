@@ -135,8 +135,8 @@
                         Water Bottle
                     </div>
                     <div class="item status">
-                        Returned: ---- <br>
-                        Claimed: ----
+                        Returned: --/--/--<br>
+                        Claimed: --/--/--
                     </div>
                     <div class="item additionalNotes">
                         Located at Soccer Field
@@ -148,7 +148,38 @@
             </div>
         </div>
         <script type="text/javascript">
-            function init() {
+            async function init() {
+                // let userid = params.get('userid') || -1
+                let uri = `/security/itemCatalog` //?userid=${userid}`
+                let itemCatalog = await fetch(uri)
+                itemCatalog = await itemCatalog.json()
+                itemCatalog = itemCatalog.message
+                for (let item of itemCatalog) {
+                    let itemContainer = document.createElement('div')
+                    itemContainer.classList.add('itemContainer')
+                    let description = document.createElement('div')
+                    description.classList.add('item', 'description')
+                    description.textContent = item[0]
+                    itemContainer.appendChild(description)
+                    let objectType = document.createElement('div')
+                    objectType.classList.add('item', 'type')
+                    objectType.textContent = item[1]
+                    itemContainer.appendChild(objectType)
+                    let status = document.createElement('div')
+                    status.classList.add('item', 'status')
+                    status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
+                    itemContainer.appendChild(status)
+                    let additionalNotes = document.createElement('div')
+                    additionalNotes.classList.add('item', 'additionalNotes')
+                    additionalNotes.textContent = item[2]
+                    itemContainer.appendChild(additionalNotes)
+                    let photo = document.createElement('div')
+                    photo.classList.add('item', 'photo')
+                    photo.textContent = item[3]
+                    itemContainer.appendChild(photo)
+                    let itemListContainer = document.getElementById('itemListContainer')
+                    itemListContainer.appendChild(itemContainer)
+                }
                 document.addEventListener('click', screenClick);
                 document.getElementById('menuButton').addEventListener('click', buttonClick);
                 document.getElementById('closeMenuButton').addEventListener('click', buttonClick);
