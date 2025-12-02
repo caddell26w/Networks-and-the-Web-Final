@@ -1,0 +1,103 @@
+:root {
+    --pcolor: #394861;
+    --hcolor: #313c52;
+    --scolor: #6e7e9a;
+    --tcolor: #f5f9ff;
+    --fcolor: #000000;
+    --ffcolor: rgb(5, 44, 112);
+    background-color: rgb(88, 107, 140);
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+div#navigationBar {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--pcolor);
+    height: 9%;
+    width: 100%;
+    align-items: center;
+}
+div#title {
+    color: white;
+    font-size: 26px;
+    margin: 0.5em;
+}
+div#dialogBox {
+    position: fixed;
+    height: 100%;
+    background-color: var(--pcolor);
+    width: 20vw;
+    display: none;
+}
+div#dialogBoxNavBar {
+    display: flex;
+    height: 2em;
+    padding: 0.5em;
+    justify-content: right;
+    align-items: center;
+}
+div#mainContentContainer {
+    display: flex;
+    justify-content: right;
+    min-height: 91%;
+    font-size: 24px;
+    padding: 0.5em;
+    background-color: var(--scolor);
+}
+div#itemListContainer {
+    width: 80%;
+}
+div.itemContainer {
+    display: flex;
+    flex-direction: row;
+}
+div.item {
+    border: 4px solid black;
+    background-color: white;
+    margin-top: -4px;
+    margin-left: -4px;
+    padding: 0.5em;
+    font-size: 18px;
+    
+}
+div.description {
+    width: 30%;
+}
+div.type {
+    width: 10%;
+}
+div.status {
+    width: 15%;
+}
+div.additionalNotes {
+    width: 25%;
+}
+div.photo {
+    flex: 1;
+}
+button {
+    background-color: var(--pcolor);
+    color: white;
+    font-size: 16px;
+    border: 0;
+}
+button#menuButton {
+    font-size: 24px;
+    margin: 0.5em;
+}
+button:hover {
+    background-color: var(--hcolor);
+}
+a.menuItem {
+    color: white;
+    font-size: 24px;
+    padding: 0.5em;
+    text-decoration: none;
+    display: block;
+}
+a.menuItem:hover {
+    background-color: var(--hcolor);
+}

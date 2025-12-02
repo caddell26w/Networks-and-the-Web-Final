@@ -10,7 +10,8 @@ const users = {}
 
 const PORT = 8429
 const app = express();
-app.use("/static", express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(parser.json())
 
 app.get("/security/lostAndFound", function(req, res) {
@@ -29,7 +30,7 @@ app.get("/security/lostAndFound", function(req, res) {
         res.redirect(`/security/lostAndFound?userid=${uid}`)
         return;
     }
-    
+
     res.sendFile(path.join(__dirname, "security", "index2.html"))
 });
 app.get("/security/itemCatalog", function(req, res) {
