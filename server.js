@@ -48,6 +48,12 @@ app.get("/security/itemCatalog", function(req, res) {
     packet.message = itemCatalog
     res.send(JSON.stringify(packet))
 })
+app.get("/security/request", function(req, res) {
+    let uid = req.body.userid
+    // ADD USER id validation
+
+    res.sendFile(path.join(__dirname, "security", "request.html"))
+})
 app.post("/security/request", function(req, res) {
     const packet = {
         status: 'error',
@@ -75,11 +81,16 @@ app.post("/security/request", function(req, res) {
     packet.message = 'Request Submitted'
     res.send(JSON.stringify(packet))
 })
-
+app.get("/security/submit", function(req, res) {
+    let userid = req.body.userid
+    //ADD USER id validation
+    
+    res.sendFile(path.join(__dirname, "security", "submit.html"))
+})
 app.post("/security/submit", function(req, res) {
     const packet = {
         status: 'error',
-        message: 'Invalid User'
+        message: 'Invalid User ID'
     }
     //Check issues in input
     let description = req.body.description
@@ -92,6 +103,11 @@ app.post("/security/submit", function(req, res) {
     packet.status = 'success'
     packet.message = 'Item Submitted'
     res.send(JSON.stringify(packet))
+})
+app.get("/security/authors", function(req, res) {
+    //ADD USER id validation
+
+    res.sendFile(path.join(__dirname, "security", "authors.html"))
 })
 
 app.listen(PORT, function() {

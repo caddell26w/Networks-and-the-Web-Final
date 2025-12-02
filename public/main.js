@@ -2,6 +2,10 @@ async function init() {
     let params = new URLSearchParams(window.location.search)
 
     let userid = params.get('userid') || -1
+    
+    document.getElementById('submitAnItem').href = `/security/submit?userid=${userid}`
+    document.getElementById('submitARequest').href = `/security/request?userid=${userid}`
+    document.getElementById('authors').href = `/security/authors?userid=${userid}`
     if (document.body.id === "indexPage") {
         let uri = `/security/itemCatalog?userid=${userid}`
 
