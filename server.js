@@ -13,15 +13,21 @@ const app = express();
 app.use("/static", express.static(path.join(__dirname, "public")))
 app.use(parser.json())
 
-app.get("/lostAndFound", function(req, res) {
+app.get("/security/lostAndFound", function(req, res) {
     let uid = req.query.userid
 
     let redirect = false;
     if ( !uid ) {
         uid = uuidv4()
+        
         console.log(`User Experience Started: ${uid}`)
 
         redirect = true
+    }
+
+    if ( redirect ) {
+        res.redirect(`/security/lostAndFound?userid=${uid}`)
+        return;
     }
     
     res.sendFile(path.join(__dirname, "security", "index2.html"))
