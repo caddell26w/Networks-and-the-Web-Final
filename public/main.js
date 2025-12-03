@@ -15,6 +15,9 @@ async function init() {
     if (document.body.id !== "authorsPage") {
         document.getElementById('authors').href = `/security/authors?userid=${userid}`
     }
+    if (document.body.id !== "requestCatalogPage") {
+        document.getElementById('getRequestCatalog').href = `/security/requestCatalogPage?userid=${userid}`
+    }
     if (document.body.id === "indexPage") {
         let uri = `/security/itemCatalog?userid=${userid}`
 
@@ -68,6 +71,91 @@ async function init() {
             }
         }
     }
+
+
+
+    if (document.body.id === "requestCatalogPage") {
+        let uri = `/security/requestCatalog?userid=${userid}`
+
+        let reqCatalog = await fetch(uri)
+        reqCatalog = await reqCatalog.json()
+        reqCatalog = reqCatalog.message
+
+        if (reqCatalog === 'Invalid User ID') { //Handle an invalid session
+            return;
+        }
+        else {
+            for (let request of reqCatalog) {
+                let contacts = reqCatalog[0];
+                let items = reqCatalog[1];
+
+                let itemContainer = document.createElement('div')
+                itemContainer.classList.add('itemContainer')
+                for (let contact of contacts) {
+                    let contactName = document.createElement('div');
+                    contactName.classList.add('item', 'contactName');
+                    contactName.textContent = contacts[0];
+                    itemContainer.appendChild(contactName);
+
+                    let contactEmail = document.createElement('div');
+                    contactEmail.classList.add('item', 'contactName');
+                    contactEmail.textContent = contacts[1];
+                    itemContainer.appendChild(contactEmail);
+                }
+
+                for (let item of items) {
+                    let description = document.createElement('div')
+                    description.classList.add('item', 'description')
+                    description.textContent = items[0]
+                    itemContainer.appendChild(description)
+
+                    let objectType = document.createElement('div')
+                    objectType.classList.add('item', 'type')
+                    objectType.textContent = items[1]
+                    itemContainer.appendChild(objectType)
+
+                    let status = document.createElement('div')
+                    status.classList.add('item', 'status')
+                    status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
+                    itemContainer.appendChild(status)
+
+                    let additionalNotes = document.createElement('div')
+                    additionalNotes.classList.add('item', 'additionalNotes')
+                    additionalNotes.textContent = items[2]
+                    itemContainer.appendChild(additionalNotes)
+
+                    let photo = document.createElement('div')
+                    photo.classList.add('item', 'photo')
+                    if (items[3] === "") {
+                        photo.textContent = "No photo"
+                    }
+                    else {
+                        let image = document.createElement('img')
+                        image.classList.add('catalogImage')
+                        image.src = `/images/${items[3]}`
+                        photo.appendChild(image)
+                    }
+                    
+                }
+            }
+
+                itemContainer.appendChild(photo)
+                
+                let itemListContainer = document.getElementById('itemListContainer')
+                itemListContainer.appendChild(itemContainer)
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     document.addEventListener('click', screenClick);
     document.getElementById('menuButton').addEventListener('click', buttonClick);
     document.getElementById('closeMenuButton').addEventListener('click', buttonClick);

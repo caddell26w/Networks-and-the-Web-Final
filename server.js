@@ -76,6 +76,11 @@ app.get("/security/requestCatalog", function(req, res) {
     packet.message = requestCatalog
     res.send(JSON.stringify(packet))
 })
+app.get("/security/requestCatalogPage", function(req, res) {
+    let uid = req.query.userid
+
+    res.sendFile(path.join(__dirname, "security", "requestCatalog.html"))
+})
 app.post("/security/request", upload.single('photo'), function(req, res) {
     const packet = {
         status: 'error',
