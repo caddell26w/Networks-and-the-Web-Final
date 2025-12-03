@@ -111,14 +111,9 @@ a.menuItem {
 a.menuItem:hover {
     background-color: var(--hcolor);
 }
-form#submitForm {
+form {
     display: flex;
     flex-direction: column;
-    background-color: var(--pcolor);
-}
-form#requestForm {
-    display: flex;
-    flex-direction: row;
     background-color: var(--pcolor);
 }
 div.requestFormContainer {
