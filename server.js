@@ -74,6 +74,7 @@ app.get("/security/requestCatalog", function(req, res) {
 
     packet.status = 'success'
     packet.message = requestCatalog
+    
     res.send(JSON.stringify(packet))
 })
 app.get("/security/requestCatalogPage", function(req, res) {
@@ -86,7 +87,7 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
         status: 'error',
         message: 'Invalid User ID'
     }
-    let userid = req.body.userid
+    let userid = req.query.userid
     // if ( !(userid in users) ) {
     //     res.send(JSON.stringify(packet))
     //     return;
@@ -107,7 +108,7 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
     requestCatalog.push(request)
     packet.status = 'success'
     packet.message = 'Request Submitted'
-    res.send(JSON.stringify(packet))
+    res.redirect(`/security/requestCatalogPage?userid=${userid}`)
 })
 app.get("/security/submit", function(req, res) {
     let userid = req.query.userid

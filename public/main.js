@@ -71,10 +71,13 @@ async function init() {
             }
         }
     }
-
-
-
-    if (document.body.id === "requestCatalogPage") {
+    else if (document.body.id === "requestPage") {
+        document.getElementById('requestForm').action = `/security/request?userid=${userid}`
+    }
+    else if (document.body.id === "submitPage") {
+        document.getElementById('submitForm').action = `/security/submit?userid=${userid}`
+    }
+    else if (document.body.id === "requestCatalogPage") {
         let uri = `/security/requestCatalog?userid=${userid}`
 
         let reqCatalog = await fetch(uri)
@@ -86,65 +89,68 @@ async function init() {
         }
         else {
             for (let request of reqCatalog) {
-                let contacts = reqCatalog[0];
-                let items = reqCatalog[1];
+                let contact = request[0];
+                let item = request[1];
+                console.log(contact, item)
 
                 let itemContainer = document.createElement('div')
                 itemContainer.classList.add('itemContainer')
-                for (let contact of contacts) {
-                    let contactName = document.createElement('div');
-                    contactName.classList.add('item', 'contactName');
-                    contactName.textContent = contacts[0];
-                    itemContainer.appendChild(contactName);
-
-                    let contactEmail = document.createElement('div');
-                    contactEmail.classList.add('item', 'contactName');
-                    contactEmail.textContent = contacts[1];
-                    itemContainer.appendChild(contactEmail);
-                }
-
-                for (let item of items) {
-                    let description = document.createElement('div')
-                    description.classList.add('item', 'description')
-                    description.textContent = items[0]
-                    itemContainer.appendChild(description)
-
-                    let objectType = document.createElement('div')
-                    objectType.classList.add('item', 'type')
-                    objectType.textContent = items[1]
-                    itemContainer.appendChild(objectType)
-
-                    let status = document.createElement('div')
-                    status.classList.add('item', 'status')
-                    status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
-                    itemContainer.appendChild(status)
-
-                    let additionalNotes = document.createElement('div')
-                    additionalNotes.classList.add('item', 'additionalNotes')
-                    additionalNotes.textContent = items[2]
-                    itemContainer.appendChild(additionalNotes)
-
-                    let photo = document.createElement('div')
-                    photo.classList.add('item', 'photo')
-                    if (items[3] === "") {
-                        photo.textContent = "No photo"
-                    }
-                    else {
-                        let image = document.createElement('img')
-                        image.classList.add('catalogImage')
-                        image.src = `/images/${items[3]}`
-                        photo.appendChild(image)
-                    }
-                    
-                }
-            }
-
-                itemContainer.appendChild(photo)
                 
+                let contactName = document.createElement('div');
+                contactName.classList.add('item', 'contactName');
+                contactName.textContent = contact[0];
+                itemContainer.appendChild(contactName);
+
+                let contactEmail = document.createElement('div');
+                contactEmail.classList.add('item', 'contactName');
+                contactEmail.textContent = contact[1];
+                itemContainer.appendChild(contactEmail);
+
+                let description = document.createElement('div')
+                description.classList.add('item', 'description')
+                description.textContent = item[0]
+                itemContainer.appendChild(description)
+
+                let objectType = document.createElement('div')
+                objectType.classList.add('item', 'type')
+                objectType.textContent = item[1]
+                itemContainer.appendChild(objectType)
+
+                let status = document.createElement('div')
+                status.classList.add('item', 'status')
+                status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
+                itemContainer.appendChild(status)
+
+                let estimatedDateLost = document.createElement('div')
+                estimatedDateLost.classList.add('item', 'estimatedDateLost')
+                let date = item[2].split("-")
+                date = `${date[1]}/${date[2]}/${date[0]}`
+                estimatedDateLost.textContent = date
+                itemContainer.appendChild(estimatedDateLost)
+
+                let additionalNotes = document.createElement('div')
+                additionalNotes.classList.add('item', 'additionalNotes')
+                additionalNotes.textContent = item[3]
+                itemContainer.appendChild(additionalNotes)
+
+                let photo = document.createElement('div')
+                photo.classList.add('item', 'photo')
+                if (item[4] === "") {
+                    photo.textContent = "No photo"
+                }
+                else {
+                    let image = document.createElement('img')
+                    image.classList.add('catalogImage')
+                    image.src = `/images/${item[4]}`
+                    photo.appendChild(image)
+                }
+                itemContainer.appendChild(photo)
+            
                 let itemListContainer = document.getElementById('itemListContainer')
                 itemListContainer.appendChild(itemContainer)
             }
         }
+    }
 
 
 

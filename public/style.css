@@ -55,6 +55,9 @@ body#indexPage > div#mainContentContainer {
 div#itemListContainer {
     width: 80%;
 }
+body#requestCatalogPage > div:nth-child(3) > div#itemListContainer{
+    width: 100%;
+}
 div.itemContainer {
     display: flex;
     flex-direction: row;
@@ -68,17 +71,40 @@ div.item {
     font-size: 18px;
     
 }
+div.contactName {
+    width: 10%;
+    overflow-wrap: break-word;
+}
+div.contactEmail {
+    width: 10%;
+    overflow-wrap: break-word;
+}
 div.description {
     width: 30%;
 }
+body#requestCatalogPage div.description {
+    width: 20%;
+}
 div.type {
+    width: 10%;
+}
+body#requestCatalogPage div.type {
     width: 10%;
 }
 div.status {
     width: 15%;
 }
+body#requestCatalogPage div.status {
+    width: 10%;
+}
+div.estimatedDateLost {
+    width: 10%;
+}
 div.additionalNotes {
     width: 25%;
+}
+body#requestCatalogPage div.additionalNotes {
+    width: 20%;
 }
 div.photo {
     flex: 1;
