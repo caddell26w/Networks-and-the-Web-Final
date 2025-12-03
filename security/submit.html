@@ -14,7 +14,7 @@
             <div id="title">NCSSM Security/Lost and Found</div>
         </div>
         <div id="mainContentContainer">
-            <form action="/security/submit" method="POST" enctype="multipart/form-data"> <!--description, objectType, additionalNotes, photo-->
+            <form id="submitForm" action="/security/submit" method="POST" enctype="multipart/form-data"> <!--description, objectType, additionalNotes, photo-->
                 <div class="inputElement">
                     <label for="description">Description:</label>
                     <textarea id="description" name="description" required="true"></textarea>

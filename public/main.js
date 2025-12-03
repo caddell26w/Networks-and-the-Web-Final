@@ -22,47 +22,51 @@ async function init() {
         itemCatalog = await itemCatalog.json()
         itemCatalog = itemCatalog.message
 
-        for (let item of itemCatalog) {
-            let itemContainer = document.createElement('div')
-            itemContainer.classList.add('itemContainer')
-
-            let description = document.createElement('div')
-            description.classList.add('item', 'description')
-            description.textContent = item[0]
-            itemContainer.appendChild(description)
-
-            let objectType = document.createElement('div')
-            objectType.classList.add('item', 'type')
-            objectType.textContent = item[1]
-            itemContainer.appendChild(objectType)
-
-            let status = document.createElement('div')
-            status.classList.add('item', 'status')
-            status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
-            itemContainer.appendChild(status)
-
-            let additionalNotes = document.createElement('div')
-            additionalNotes.classList.add('item', 'additionalNotes')
-            additionalNotes.textContent = item[2]
-            itemContainer.appendChild(additionalNotes)
-
-            let photo = document.createElement('div')
-            photo.classList.add('item', 'photo')
-            if (item[3] === "") {
-                photo.textContent = "No photo"
-            }
-            else {
-                let image = document.createElement('img')
-                image.classList.add('catalogImage')
-                image.src = `/images/${item[3]}`
-                photo.appendChild(image)
-            }
-            itemContainer.appendChild(photo)
-            
-            let itemListContainer = document.getElementById('itemListContainer')
-            itemListContainer.appendChild(itemContainer)
+        if (itemCatalog === 'Invalid User ID') { //Handle an invalid session
+            return;
         }
-        console.log(itemCatalog)
+        else {
+            for (let item of itemCatalog) {
+                let itemContainer = document.createElement('div')
+                itemContainer.classList.add('itemContainer')
+
+                let description = document.createElement('div')
+                description.classList.add('item', 'description')
+                description.textContent = item[0]
+                itemContainer.appendChild(description)
+
+                let objectType = document.createElement('div')
+                objectType.classList.add('item', 'type')
+                objectType.textContent = item[1]
+                itemContainer.appendChild(objectType)
+
+                let status = document.createElement('div')
+                status.classList.add('item', 'status')
+                status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
+                itemContainer.appendChild(status)
+
+                let additionalNotes = document.createElement('div')
+                additionalNotes.classList.add('item', 'additionalNotes')
+                additionalNotes.textContent = item[2]
+                itemContainer.appendChild(additionalNotes)
+
+                let photo = document.createElement('div')
+                photo.classList.add('item', 'photo')
+                if (item[3] === "") {
+                    photo.textContent = "No photo"
+                }
+                else {
+                    let image = document.createElement('img')
+                    image.classList.add('catalogImage')
+                    image.src = `/images/${item[3]}`
+                    photo.appendChild(image)
+                }
+                itemContainer.appendChild(photo)
+                
+                let itemListContainer = document.getElementById('itemListContainer')
+                itemListContainer.appendChild(itemContainer)
+            }
+        }
     }
     document.addEventListener('click', screenClick);
     document.getElementById('menuButton').addEventListener('click', buttonClick);

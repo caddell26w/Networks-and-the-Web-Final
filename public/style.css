@@ -111,10 +111,18 @@ a.menuItem {
 a.menuItem:hover {
     background-color: var(--hcolor);
 }
-form {
+form#submitForm {
     display: flex;
     flex-direction: column;
     background-color: var(--pcolor);
+}
+form#requestForm {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--pcolor);
+}
+div.requestFormContainer {
+    align-items: center;
 }
 div.inputElement {
     margin: 0.5em;
@@ -132,6 +140,10 @@ input {
     max-width: 65%;
     flex-grow: 1;
     overflow: hidden;
+}
+input[type="text"], input[type="email"] {
+    margin: 0;
+    border: 0.5em solid var(--pcolor);
 }
 select {
     flex-grow: 1;
@@ -154,20 +166,22 @@ textarea {
     resize: block;
 }
 .person {
-    font-size:larger;
     width: 60vw;
     height: 30vh;
-    margin-top:.75em;
+    margin-top: 0.75em;
     background-color:#313c52;
     border: thick, double, aliceblue;
     flex-grow: 1;
     color: var(--tcolor);
 }
+div.name {
+    font-size: larger;
+}
 .contact {
-    margin: .5em;
-    flex-grow:1;
+    margin-top: 0.75em;
+    flex-grow: 1;
     color: var(--scolor);
 }
-.details {
-    margin: .25em;
+div.name, div.details {
+    margin: 2%;
 }

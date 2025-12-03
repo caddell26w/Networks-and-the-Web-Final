@@ -14,45 +14,49 @@
             <div id="title">NCSSM Security/Lost and Found</div>
         </div>
         <div id="mainContentContainer"> <!--contactName, contactEmail, description, estimatedDateLost, objectType, photo-->
-            <form action="/security/request" method="POST" enctype="multipart/form-data"> <!--description, objectType, additionalNotes, photo-->
-                <div class="inputElement">
-                    <label for="contactName">Contact Name:</label>
-                    <input id="contactName" name="contactName" type="text" required="true">
+            <form id="requestForm" action="/security/request" method="POST" enctype="multipart/form-data"> <!--description, objectType, additionalNotes, photo-->
+                <div class="requestFormContainer">
+                    <div class="inputElement">
+                        <label for="contactName">Contact Name:</label>
+                        <input id="contactName" name="contactName" type="text" required="true">
+                    </div>
+                    <div class="inputElement">
+                        <label for="contactEmail">Contact Email:</label>
+                        <input id="contactEmail" name="contactEmail" type="email" required="true">
+                    </div>
+                    <div class="inputElement">
+                        <label for="description">Description:</label>
+                        <textarea id="description" name="description" required="true"></textarea>
+                    </div>
+                    <div class="inputElement">
+                        <label for="estimatedDateLost">Estimated Date Lost:</label>
+                        <input id="estimatedDateLost" name="estimatedDateLost" type="date" required="false">
+                    </div>
                 </div>
-                <div class="inputElement">
-                    <label for="contactEmail">Contact Email</label>
-                    <input id="contactEmail" name="contactEmail" type="email" required="true">
-                </div>
-                <div class="inputElement">
-                    <label for="description">Description:</label>
-                    <textarea id="description" name="description" required="true"></textarea>
-                </div>
-                <div class="inputElement">
-                    <label for="estimatedDateLost">Estimated Date Lost:</label>
-                    <input id="estimatedDateLost" name="estimatedDateLost" type="date" required="false">
-                </div>
-                <div class="inputElement">
-                    <label for="objectType">Object Type:</label>
-                    <select id="objectType" name="objectType" required="true">
-                        <option value="" disabled="true" selected="true">Select an option</option>
-                        <option value="Water Bottle">Water Bottle</option>
-                        <option value="Clothing Item">Clothing Item</option>
-                        <option value="School Supply">School Supply</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Keys">Keys</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="inputElement">
-                    <label for="additionalNotes">Additional Notes:</label>
-                    <textarea id="additionalNotes" name="additionalNotes"></textarea>
-                </div>
-                <div class="inputElement">
-                    <label for="photo">Photo:</label>
-                    <input id="photo" name="photo" type="file" required="false">
-                </div>
-                <div class="inputElement">
-                    <input type="submit">
+                <div class="requestFormContainer">
+                    <div class="inputElement">
+                        <label for="objectType">Object Type:</label>
+                        <select id="objectType" name="objectType" required="true">
+                            <option value="" disabled="true" selected="true">Select an option</option>
+                            <option value="Water Bottle">Water Bottle</option>
+                            <option value="Clothing Item">Clothing Item</option>
+                            <option value="School Supply">School Supply</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Keys">Keys</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="inputElement">
+                        <label for="additionalNotes">Additional Notes:</label>
+                        <textarea id="additionalNotes" name="additionalNotes"></textarea>
+                    </div>
+                    <div class="inputElement">
+                        <label for="photo">Photo:</label>
+                        <input id="photo" name="photo" type="file" required="false">
+                    </div>
+                    <div class="inputElement">
+                        <input type="submit">
+                    </div>
                 </div>
             </form>
         </div>
