@@ -1,16 +1,20 @@
 const express = require("express")
+const multer = require("multer")
+const upload = multer({dest: __dirname + '/uploads/'})
 const parser = require("body-parser")
 const path = require("path")
 const {v4: uuidv4} = require('uuid')
 
-const itemCatalog = [[1,3,4, 5], [4,34, 5, 10], [4, 5, 2, 4], [0, 3, 4, 5]]
+const itemCatalog = []
 const requestCatalog = []
 
 const users = {}
 
 const PORT = 8429
 const app = express();
+
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/images', express.static(path.join(__dirname, "uploads")))
 
 app.use(parser.json())
 
@@ -54,24 +58,25 @@ app.get("/security/request", function(req, res) {
 
     res.sendFile(path.join(__dirname, "security", "request.html"))
 })
-app.post("/security/request", function(req, res) {
+app.post("/security/request", upload.single('photo'), function(req, res) {
     const packet = {
         status: 'error',
         message: 'Invalid User ID'
     }
     let userid = req.body.userid
-    if ( !(userid in users) ) {
-        res.send(JSON.stringify(packet))
-        return;
-    }
+    // if ( !(userid in users) ) {
+    //     res.send(JSON.stringify(packet))
+    //     return;
+    // }
 
-    let user = users[userid]
-    let description = req.body.description
+    // let user = users[userid]
     let contactName = req.body.contactName
     let contactEmail = req.body.contactEmail
+    let description = req.body.description
     let estimatedDateLost = req.body.estimatedDateLost
+    let additionalNotes = req.body.additionalNotes
     let objectType = req.body.objectType
-    let photo = req.body.photo
+    let photo = req.file.filename
     let item = [description, objectType, estimatedDateLost, additionalNotes, photo]
     let request = [[contactName, contactEmail], item]
 
@@ -87,22 +92,23 @@ app.get("/security/submit", function(req, res) {
     
     res.sendFile(path.join(__dirname, "security", "submit.html"))
 })
-app.post("/security/submit", function(req, res) {
+app.post("/security/submit", upload.single('photo'), function(req, res) {
     const packet = {
         status: 'error',
         message: 'Invalid User ID'
     }
     //Check issues in input
+    let userid = req.body.userid
     let description = req.body.description
     let objectType = req.body.objectType
     let additionalNotes = req.body.additionalNotes
-    let photo = req.body.photo
+    let photo = req.file.filename
     let item = [description, objectType, additionalNotes, photo]
-
+    
     itemCatalog.push(item)
     packet.status = 'success'
     packet.message = 'Item Submitted'
-    res.send(JSON.stringify(packet))
+    res.redirect(`/security/lostAndFound?userid=${userid}`)
 })
 app.get("/security/authors", function(req, res) {
     //ADD USER id validation

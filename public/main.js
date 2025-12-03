@@ -3,9 +3,18 @@ async function init() {
 
     let userid = params.get('userid') || -1
     
-    document.getElementById('submitAnItem').href = `/security/submit?userid=${userid}`
-    document.getElementById('submitARequest').href = `/security/request?userid=${userid}`
-    document.getElementById('authors').href = `/security/authors?userid=${userid}`
+    if (document.body.id !== "indexPage") {
+        document.getElementById('itemCatalog').href = `/security/lostAndFound?userid=${userid}`
+    }
+    if (document.body.id !== "submitPage") {
+        document.getElementById('submitAnItem').href = `/security/submit?userid=${userid}`
+    }
+    if (document.body.id !== "requestPage") {
+        document.getElementById('submitARequest').href = `/security/request?userid=${userid}`
+    }
+    if (document.body.id !== "authorsPage") {
+        document.getElementById('authors').href = `/security/authors?userid=${userid}`
+    }
     if (document.body.id === "indexPage") {
         let uri = `/security/itemCatalog?userid=${userid}`
 
@@ -39,12 +48,21 @@ async function init() {
 
             let photo = document.createElement('div')
             photo.classList.add('item', 'photo')
-            photo.textContent = item[3]
+            if (item[3] === "") {
+                photo.textContent = "No photo"
+            }
+            else {
+                let image = document.createElement('img')
+                image.classList.add('catalogImage')
+                image.src = `/images/${item[3]}`
+                photo.appendChild(image)
+            }
             itemContainer.appendChild(photo)
             
             let itemListContainer = document.getElementById('itemListContainer')
             itemListContainer.appendChild(itemContainer)
         }
+        console.log(itemCatalog)
     }
     document.addEventListener('click', screenClick);
     document.getElementById('menuButton').addEventListener('click', buttonClick);
