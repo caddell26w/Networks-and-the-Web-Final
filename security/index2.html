@@ -15,6 +15,41 @@
             <div id="title">NCSSM Security/Lost and Found</div>
         </div>
         <div id="mainContentContainer">
+            <div id="searchContainer">
+                <label for="searchBy" id="searchByLabel">Search By:</label>
+                <select id="searchBy" name="searchBy" required="true">
+                    <option value="" disabled="true" selected="true">Search by a parameter</option>
+                    <option value="description">Description Keyword/Phrase</option>
+                    <option value="type">Type</option>
+                    <!-- <option value="status">Status</option> -->
+                    <option value="additionalNotes">Additional Notes Keyword/Phrase</option>
+                </select>
+                <div id="descriptionSearchContainer" class="searchContainer" hidden="true">
+                    <label for="descriptionSearchBy" id="descriptionSearchByLabel">Description:</label>
+                    <input id="descriptionSearchBy" name="descriptionSearchBy" type="text">
+                </div>
+                <div id="typeSearchContainer" class="searchContainer" hidden="true">
+                    <label for="typeSearchBy" id="typeSearchByLabel">Type:</label>
+                    <select id="typeSearchBy" name="typeSearchBy" required="true">
+                        <option value="" disabled="true" selected="true">Select a type</option>
+                        <option value="Water Bottle">Water Bottle</option>
+                        <option value="Clothing Item">Clothing Item</option>
+                        <option value="School Supply">School Supply</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Keys">Keys</option>
+                        <option value="Other">Other</option>
+                        <option value="None">None</option>
+                    </select>
+                </div>
+                <!-- <div id="statusSearchContainer" class="searchContainer" hidden="true">
+                    <label for="statusSearchBy" id="statusSearchByLabel">Status</label>
+                    <input id="statusSearchBy" name="statusSearchBy" type="text">
+                </div> -->
+                <div id="additionalNotesSearchContainer" class="searchContainer" hidden="true">
+                    <label for="additionalNotesSearchBy" id="additionalNotesSearchByLabel">Additional Notes:</label>
+                    <input id="additionalNotesSearchBy" name="additionalNotesSearchBy" type="text">
+                </div>
+            </div>
             <div id="itemListContainer">
                 <div class="itemContainer">
                     <div class="item description">Description</div>

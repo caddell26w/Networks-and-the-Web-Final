@@ -44,14 +44,39 @@ app.get("/security/itemCatalog", function(req, res) {
         message: 'Invalid User ID'
     }
     let userid = req.query.userid
+    let searchBy = req.query.searchBy
+    let parameterValue = req.query.parameterValue
+    let parameters = ["description", "type", "additionalNotes"]
+    let displayCatalog = []
     
     if ( !(users.includes(userid)) ) { //switch "includes" for "in" if we change to an object
         res.send(JSON.stringify(packet))
         return;
     }
 
+    if (searchBy !== undefined && parameterValue !== undefined) {
+        let itemIndex = parameters.indexOf(searchBy)
+        if (itemIndex === 0 || itemIndex === 2) {
+            for (let item of itemCatalog) {
+                if (item[itemIndex].toLowerCase().includes(parameterValue.toLowerCase())) {
+                    displayCatalog.push(item)
+                }
+            }
+        }
+        else if (itemIndex === 1) {
+            for (let item of itemCatalog) {
+                if (item[itemIndex] === parameterValue) {
+                    displayCatalog.push(item)
+                }
+            }
+        }
+    }
+    else {
+        displayCatalog = itemCatalog
+    }
+
     packet.status = 'success'
-    packet.message = itemCatalog
+    packet.message = displayCatalog
     res.send(JSON.stringify(packet))
 })
 app.get("/security/request", function(req, res) {
