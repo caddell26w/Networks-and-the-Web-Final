@@ -23,7 +23,7 @@ app.get("/security/lostAndFound", function(req, res) {
 
     let redirect = false;
 
-    if ( !userid ) {
+    if ( !userid ) { // Creates a User ID
         userid = uuidv4()
         users.push(userid)
         
@@ -32,7 +32,7 @@ app.get("/security/lostAndFound", function(req, res) {
         redirect = true
     }
 
-    if ( redirect ) {
+    if ( redirect ) { // Redirects to the same page but with the userID in the req.query
         res.redirect(`/security/lostAndFound?userid=${userid}`)
         return;
     }
@@ -63,12 +63,15 @@ app.get("/security/itemCatalog", function(req, res) {
     if (searchBy !== undefined && parameterValue !== undefined) {
         let itemIndex = parameters.indexOf(searchBy)
         if (itemIndex === 0 || itemIndex === 2) {
+            // Sorts the itemCatalog with the current parameter and parameter value
             for (let item of itemCatalog) {
+                // Ensures the text is not case-sensitive
                 if (item[itemIndex].toLowerCase().includes(parameterValue.toLowerCase())) {
                     displayCatalog.push(item)
                 }
             }
         }
+        // Sorts by objectType
         else if (itemIndex === 1) {
             for (let item of itemCatalog) {
                 if (item[itemIndex] === parameterValue) {
@@ -131,6 +134,7 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
         return;
     }
 
+    // Collects all parameters from the request form
     let contactName = req.body.contactName
     let contactEmail = req.body.contactEmail
     let description = req.body.description
@@ -139,14 +143,16 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
     let objectType = req.body.objectType
     let photo = req.file.filename
     let mimetype = req.file.mimetype
+    // Checks to ensure the file was actually a photo
     if (mimetype != "image/png" || mimetype != "image/jpeg" || mimetype != "image/jpg") {
         res.redirect(`/security/request?userid=${userid}`)
         return;
     }
+    // Creates an item
     let item = [description, objectType, estimatedDateLost, additionalNotes, photo]
+    // Creates the request
     let request = [[contactName, contactEmail], item]
 
-    //Check issues in input
     requestCatalog.push(request)
     packet.status = 'success'
     packet.message = 'Request Submitted'
@@ -166,21 +172,24 @@ app.post("/security/submit", upload.single('photo'), function(req, res) {
         status: 'error',
         message: 'Invalid User ID'
     }
-    //Check issues in input
+
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) { // Invalid User ID
         res.redirect(`/security/error`)
         return;
     }
+    // Collects all parameters from the submit an item form
     let description = req.body.description
     let objectType = req.body.objectType
     let additionalNotes = req.body.additionalNotes
     let photo = req.file.filename
     let mimetype = req.file.mimetype
+    // Checks to ensure the file was actually a photo
     if (mimetype != "image/png" || mimetype != "image/jpeg" || mimetype != "image/jpg") {
         res.redirect(`/security/submit?userid=${userid}`)
         return;
     }
+    // Creates the item
     let item = [description, objectType, additionalNotes, photo]
     
     itemCatalog.push(item)
@@ -190,7 +199,7 @@ app.post("/security/submit", upload.single('photo'), function(req, res) {
 })
 app.get("/security/authors", function(req, res) {
     let userid = req.query.userid
-    if ( !(users.includes(userid)) ) {
+    if ( !(users.includes(userid)) ) { //Invalid User ID
         res.redirect(`/security/error`)
         return;
     }
