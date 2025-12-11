@@ -154,7 +154,6 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
 })
 app.get("/security/submit", function(req, res) {
     let userid = req.query.userid
-    console.log(users)
     if ( !(users.includes(userid)) ) { // Invalid User ID
         res.redirect(`/security/error`)
         return;
