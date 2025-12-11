@@ -38,7 +38,7 @@ app.get("/security/lostAndFound", function(req, res) {
     }
 
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -56,7 +56,7 @@ app.get("/security/itemCatalog", function(req, res) {
     let displayCatalog = []
     
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -88,7 +88,7 @@ app.get("/security/itemCatalog", function(req, res) {
 app.get("/security/request", function(req, res) {
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -102,7 +102,7 @@ app.get("/security/requestCatalog", function(req, res) {
     let userid = req.query.userid
 
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -114,7 +114,7 @@ app.get("/security/requestCatalog", function(req, res) {
 app.get("/security/requestCatalogPage", function(req, res) {
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -127,7 +127,7 @@ app.post("/security/request", upload.single('photo'), function(req, res) {
     }
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
@@ -156,7 +156,7 @@ app.get("/security/submit", function(req, res) {
     let userid = req.query.userid
     console.log(users)
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
     
@@ -170,7 +170,7 @@ app.post("/security/submit", upload.single('photo'), function(req, res) {
     //Check issues in input
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) { // Invalid User ID
-        res.redirect(`/security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
     let description = req.body.description
@@ -192,11 +192,14 @@ app.post("/security/submit", upload.single('photo'), function(req, res) {
 app.get("/security/authors", function(req, res) {
     let userid = req.query.userid
     if ( !(users.includes(userid)) ) {
-        res.redirect(`security/lostAndFound`)
+        res.redirect(`/security/error`)
         return;
     }
 
     res.sendFile(path.join(__dirname, "security", "authors.html"))
+})
+app.get("/security/error", function(req, res) {
+    res.sendFile(path.join(__dirname, "security", "error.html"))
 })
 
 app.listen(PORT, function() {

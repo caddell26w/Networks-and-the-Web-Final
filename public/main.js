@@ -3,115 +3,117 @@ let params = new URLSearchParams(window.location.search)
 let userid = params.get('userid') || -1
 
 async function init() {
-    if (document.body.id !== "indexPage") {
-        document.getElementById('itemCatalog').href = `/security/lostAndFound?userid=${userid}`
-    }
-    if (document.body.id !== "submitPage") {
-        document.getElementById('submitAnItem').href = `/security/submit?userid=${userid}`
-    }
-    if (document.body.id !== "requestPage") {
-        document.getElementById('submitARequest').href = `/security/request?userid=${userid}`
-    }
-    if (document.body.id !== "authorsPage") {
-        document.getElementById('authors').href = `/security/authors?userid=${userid}`
-    }
-    if (document.body.id !== "requestCatalogPage") {
-        document.getElementById('getRequestCatalog').href = `/security/requestCatalogPage?userid=${userid}`
-    }
-    if (document.body.id === "indexPage") {
-        document.getElementById('searchBy').addEventListener('change', searchByChanged)
-        
-        let uri = `/security/itemCatalog?userid=${userid}`
-
-        dynamicItemCatalog(uri)
-    }
-    else if (document.body.id === "requestPage") {
-        document.getElementById('requestForm').action = `/security/request?userid=${userid}`
-    }
-    else if (document.body.id === "submitPage") {
-        document.getElementById('submitForm').action = `/security/submit?userid=${userid}`
-    }
-    else if (document.body.id === "requestCatalogPage") {
-        let uri = `/security/requestCatalog?userid=${userid}`
-
-        let reqCatalog = await fetch(uri)
-        reqCatalog = await reqCatalog.json()
-        reqCatalog = reqCatalog.message
-
-        if (reqCatalog === 'Invalid User ID') { //Handle an invalid session
-            return;
+    if (document.body.id !== "errorPage") {
+        if (document.body.id !== "indexPage") {
+            document.getElementById('itemCatalog').href = `/security/lostAndFound?userid=${userid}`
         }
-        else {
-            for (let request of reqCatalog) {
-                let contact = request[0];
-                let item = request[1];
-
-                let itemContainer = document.createElement('div')
-                itemContainer.classList.add('itemContainer')
-                
-                let contactName = document.createElement('div');
-                contactName.classList.add('item', 'contactName');
-                contactName.textContent = contact[0];
-                itemContainer.appendChild(contactName);
-
-                let contactEmail = document.createElement('div');
-                contactEmail.classList.add('item', 'contactEmail');
-                contactEmail.textContent = contact[1];
-                itemContainer.appendChild(contactEmail);
-
-                let description = document.createElement('div')
-                description.classList.add('item', 'description')
-                description.textContent = item[0]
-                itemContainer.appendChild(description)
-
-                let objectType = document.createElement('div')
-                objectType.classList.add('item', 'type')
-                objectType.textContent = item[1]
-                itemContainer.appendChild(objectType)
-
-                let status = document.createElement('div')
-                status.classList.add('item', 'status')
-                status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
-                itemContainer.appendChild(status)
-
-                let estimatedDateLost = document.createElement('div')
-                estimatedDateLost.classList.add('item', 'estimatedDateLost')
-                let date = item[2].split("-")
-                date = `${date[1]}/${date[2]}/${date[0]}`
-                estimatedDateLost.textContent = date
-                itemContainer.appendChild(estimatedDateLost)
-
-                let additionalNotes = document.createElement('div')
-                additionalNotes.classList.add('item', 'additionalNotes')
-                additionalNotes.textContent = item[3]
-                itemContainer.appendChild(additionalNotes)
-
-                let photo = document.createElement('div')
-                photo.classList.add('item', 'photo')
-                let fileStatus = await checkFile(`/images/${item[4]}`)
-                if (item[4] === "" || fileStatus === 404) {
-                    photo.textContent = "No photo"
-                }
-                else if (fileStatus === "Error while trying to load...") {
-                    photo.textContent = fileStatus
-                }
-                else {
-                    let image = document.createElement('img')
-                    image.classList.add('catalogImage')
-                    image.src = `/images/${item[4]}`
-                    photo.appendChild(image)
-                }
-                itemContainer.appendChild(photo)
+        if (document.body.id !== "submitPage") {
+            document.getElementById('submitAnItem').href = `/security/submit?userid=${userid}`
+        }
+        if (document.body.id !== "requestPage") {
+            document.getElementById('submitARequest').href = `/security/request?userid=${userid}`
+        }
+        if (document.body.id !== "authorsPage") {
+            document.getElementById('authors').href = `/security/authors?userid=${userid}`
+        }
+        if (document.body.id !== "requestCatalogPage") {
+            document.getElementById('getRequestCatalog').href = `/security/requestCatalogPage?userid=${userid}`
+        }
+        if (document.body.id === "indexPage") {
+            document.getElementById('searchBy').addEventListener('change', searchByChanged)
             
-                let itemListContainer = document.getElementById('itemListContainer')
-                itemListContainer.appendChild(itemContainer)
+            let uri = `/security/itemCatalog?userid=${userid}`
+
+            dynamicItemCatalog(uri)
+        }
+        else if (document.body.id === "requestPage") {
+            document.getElementById('requestForm').action = `/security/request?userid=${userid}`
+        }
+        else if (document.body.id === "submitPage") {
+            document.getElementById('submitForm').action = `/security/submit?userid=${userid}`
+        }
+        else if (document.body.id === "requestCatalogPage") {
+            let uri = `/security/requestCatalog?userid=${userid}`
+
+            let reqCatalog = await fetch(uri)
+            reqCatalog = await reqCatalog.json()
+            reqCatalog = reqCatalog.message
+
+            if (reqCatalog === 'Invalid User ID') { //Handle an invalid session
+                return;
+            }
+            else {
+                for (let request of reqCatalog) {
+                    let contact = request[0];
+                    let item = request[1];
+
+                    let itemContainer = document.createElement('div')
+                    itemContainer.classList.add('itemContainer')
+                    
+                    let contactName = document.createElement('div');
+                    contactName.classList.add('item', 'contactName');
+                    contactName.textContent = contact[0];
+                    itemContainer.appendChild(contactName);
+
+                    let contactEmail = document.createElement('div');
+                    contactEmail.classList.add('item', 'contactEmail');
+                    contactEmail.textContent = contact[1];
+                    itemContainer.appendChild(contactEmail);
+
+                    let description = document.createElement('div')
+                    description.classList.add('item', 'description')
+                    description.textContent = item[0]
+                    itemContainer.appendChild(description)
+
+                    let objectType = document.createElement('div')
+                    objectType.classList.add('item', 'type')
+                    objectType.textContent = item[1]
+                    itemContainer.appendChild(objectType)
+
+                    let status = document.createElement('div')
+                    status.classList.add('item', 'status')
+                    status.innerHTML = "Returned: --/--/--<br>Claimed: --/--/--"
+                    itemContainer.appendChild(status)
+
+                    let estimatedDateLost = document.createElement('div')
+                    estimatedDateLost.classList.add('item', 'estimatedDateLost')
+                    let date = item[2].split("-")
+                    date = `${date[1]}/${date[2]}/${date[0]}`
+                    estimatedDateLost.textContent = date
+                    itemContainer.appendChild(estimatedDateLost)
+
+                    let additionalNotes = document.createElement('div')
+                    additionalNotes.classList.add('item', 'additionalNotes')
+                    additionalNotes.textContent = item[3]
+                    itemContainer.appendChild(additionalNotes)
+
+                    let photo = document.createElement('div')
+                    photo.classList.add('item', 'photo')
+                    let fileStatus = await checkFile(`/images/${item[4]}`)
+                    if (item[4] === "" || fileStatus === 404) {
+                        photo.textContent = "No photo"
+                    }
+                    else if (fileStatus === "Error while trying to load...") {
+                        photo.textContent = fileStatus
+                    }
+                    else {
+                        let image = document.createElement('img')
+                        image.classList.add('catalogImage')
+                        image.src = `/images/${item[4]}`
+                        photo.appendChild(image)
+                    }
+                    itemContainer.appendChild(photo)
+                
+                    let itemListContainer = document.getElementById('itemListContainer')
+                    itemListContainer.appendChild(itemContainer)
+                }
             }
         }
-    }
 
-    document.addEventListener('click', screenClick);
-    document.getElementById('menuButton').addEventListener('click', buttonClick);
-    document.getElementById('closeMenuButton').addEventListener('click', buttonClick);
+        document.addEventListener('click', screenClick);
+        document.getElementById('menuButton').addEventListener('click', buttonClick);
+        document.getElementById('closeMenuButton').addEventListener('click', buttonClick);
+    }
 }
 
 async function checkFile(uri) {
